@@ -30,4 +30,7 @@ Route::get('client/{id}', [ClientController::class, 'getClientsById']);
 Route::post('addClient', [ClientController::class, 'addClient']);
 
 //update client
-Route::get('updateClient/{id}', [ClientController::class, 'updateClient']);
+Route::put('updateClient/{id}', [ClientController::class, 'updateClient']);
+
+//delete client
+Route::delete('deleteClient/{id}', [ClientController::class, 'deleteClient']);

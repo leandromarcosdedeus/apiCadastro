@@ -22,4 +22,20 @@ class ClientController extends Controller
         $client = Client::create($request->all());
         return response($client, 201);
     }
+    public function updateClient(Request $request, $id){
+        $client = Client::find($id);
+        if(is_null($client)){
+            return response()->json(['message:'=>'Cliente não encontrado'], 404);
+        }
+        $client->update($request->all());
+        return response($client, 200);
+    }
+    public function deleteClient(Request $request, $id){
+        $client = Client::find($id);
+        if(is_null($client)){
+            return response()->json(['message:'=>'Cliente não encontrado'], 404);          
+        }
+        $client->delete();
+        return response()->json(null, 204);
+    }
 }

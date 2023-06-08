@@ -19,8 +19,13 @@ class ClientController extends Controller
         return response()->json($client::find($id));
     }
     public function addClient(Request $request){
-        $client = Client::create($request->all());
-        return response($client, 201);
+        $data = $request;
+        
+        if(is_numeric($data->CPF) & strlen($data->CPF) == 12 ){
+            $client = Client::create($request->all());
+            return response($client, 201);
+        }
+        return response()->json(['message'=>'CPF inválido']);
     }
     public function updateClient(Request $request, $id){
         $client = Client::find($id);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Validacao\Validacao;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -19,9 +20,10 @@ class ClientController extends Controller
         return response()->json($client::find($id));
     }
     public function addClient(Request $request){
-        $data = $request;
         
-        if(is_numeric($data->CPF) & strlen($data->CPF) == 12 ){
+        $teste = new Validacao;
+        //nome, cpf, 
+        if($teste->validarDados($request) == true){
             $client = Client::create($request->all());
             return response($client, 201);
         }

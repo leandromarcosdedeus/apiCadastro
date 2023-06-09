@@ -34,3 +34,6 @@ Route::put('updateClient/{id}', [ClientController::class, 'updateClient']);
 
 //delete client
 Route::delete('deleteClient/{id}', [ClientController::class, 'deleteClient']);
+
+//item frequente
+Route::get('/mostFrequent', [ClientController::class, 'mostFrequent']);

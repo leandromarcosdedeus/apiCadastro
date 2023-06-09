@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Validacao\Validacao;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class ClientController extends Controller
 {
@@ -27,7 +29,9 @@ class ClientController extends Controller
             $client = Client::create($request->all());
             return response($client, 201);
         }
-        return response()->json(['message'=>'CPF inválido']);
+        else{
+            return response()->json(['message'=>'Cadastro recusado']);
+        }
     }
     public function updateClient(Request $request, $id){
         $client = Client::find($id);
@@ -44,5 +48,11 @@ class ClientController extends Controller
         }
         $client->delete();
         return response()->json(null, 204);
+    }
+    public function mostFrequent(){
+        $mostFrequent = DB::table('clients')->select('cidade',
+        DB::raw('COUNT(*) as total'))->groupBy('cidade')->orderByDesc('total')->first();
+        return $mostFrequent;
+
     }
 }

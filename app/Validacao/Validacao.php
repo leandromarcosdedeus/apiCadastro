@@ -2,13 +2,20 @@
 namespace App\Validacao;
 
 class Validacao{
-    public function validarDados($request){
-
+    public function validarDados($request) {
         $teste = new Validacao;
-        $teste->validarNome($request->nome);
-        $teste->validarCPF(($request->CPF));
-        
+        if(!$teste->validarNome($request->nome) ||
+           !$teste->validarCPF($request->CPF) ||
+           !$teste->validarApelido($request->apelido) ||
+           !$teste->validarCidade($request->cidade) ||
+           !$teste->validarTime($request->time) ||
+           !$teste->validarHobbie($request->hobbie)) {
+            return false;
+        }
+    
+        return true;
     }
+    
     public function validarCPF($cpf) {
         $cpf = preg_replace('/[^0-9]/', '', $cpf);
     
@@ -28,10 +35,8 @@ class Validacao{
         $resto2 = ($digito2 + ($resto1 * 2)) % 11 < 2 ? 0 : 11 - (($digito2 + ($resto1 * 2)) % 11);
     
         if ($cpf[9] != $resto1 || $cpf[10] != $resto2) {
-            
             return false;
         } 
-    
         return true;
     }
     
@@ -44,6 +49,29 @@ class Validacao{
         }
         return true;
     }
+    public static function validarApelido($apelido){
+        if(is_null($apelido)){
+            return false;   
+        }
+        return true;
+    }
+    public static function validarHobbie($hobbie){
+        if(is_null($hobbie)){
+            return false;   
+        }
+        return true; 
+    }
+    public static function validarTime($time){
+        if(is_null($time)){
+            return false;   
+        }
+        return true; 
+    }
+    public static function validarCidade($cidade){
+        if($cidade != null){
+            return true;
+        }
+        return false; 
+    }
     
-
 }

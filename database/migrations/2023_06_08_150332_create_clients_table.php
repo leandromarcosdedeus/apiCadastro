@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('apelido');
             $table->string('time');
-            $table->integer('CPF');
+            $table->bigInteger('CPF');
             $table->string('hobbie');
             $table->string('cidade');
             $table->timestamps();

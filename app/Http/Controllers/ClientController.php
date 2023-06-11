@@ -25,7 +25,7 @@ class ClientController extends Controller
         
         $teste = new Validacao;
         //nome, cpf, 
-        if($teste->validarDados($request) == true){
+        if($teste->validarClient($request) == true){
             $client = Client::create($request->all());
             return response($client, 201);
         }
@@ -50,9 +50,20 @@ class ClientController extends Controller
         return response()->json(null, 204);
     }
     public function mostFrequent(){
+        // Ao inves disso
         $mostFrequent = DB::table('clients')->select('cidade',
         DB::raw('COUNT(*) as total'))->groupBy('cidade')->orderByDesc('total')->first();
         return $mostFrequent;
+        //Escreva isso 
 
+        $data = Client::all();
+        $result = collect();
+        foreach ($data->groupBy('cidade') as $cidade=>$values) {
+                $result->push([
+                    'cidade'=> $cidade,
+                    'values'=> $values->count()
+                ]);
+        }
+        return $result;
     }
 }

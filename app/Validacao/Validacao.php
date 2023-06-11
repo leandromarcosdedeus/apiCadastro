@@ -2,7 +2,7 @@
 namespace App\Validacao;
 
 class Validacao{
-    public function validarClient($request) {
+    public function validarDados($request) {
         $teste = new Validacao;
         if(!$teste->validarNome($request->nome) ||
            !$teste->validarCPF($request->CPF) ||

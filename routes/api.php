@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,17 @@ Route::put('updateClient/{id}', [ClientController::class, 'updateClient']);
 Route::delete('deleteClient/{id}', [ClientController::class, 'deleteClient']);
 
 //item frequente
-Route::get('/mostFrequent', [ClientController::class, 'mostFrequent']);
+Route::get('/bigCity', [CityController::class, 'bigCity']);
+
+Route::get('/biggestCrown', [ClientController::class, 'biggestCrown']);
+
+//Rotas tabela Cidades
+Route::post('/addCity', [CityController::class, 'addCity']);
+
+Route::put('updateCity/{id}', [CityController::class, 'updateCity']);
+
+Route::get('city', [CityController::class, 'getCity']);
+
+Route::delete('deleteCity/{id}', [CityController::class, 'deleteCity']);
+
+Route::get('city/{id}', [CityController::class, 'getCityById']);

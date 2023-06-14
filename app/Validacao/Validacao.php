@@ -7,7 +7,7 @@ class Validacao{
         if(!$teste->validarNome($request->nome) ||
            !$teste->validarCPF($request->CPF) ||
            !$teste->validarApelido($request->apelido) ||
-           !$teste->validarCidade($request->cidade) ||
+           
            !$teste->validarTime($request->time) ||
            !$teste->validarHobbie($request->hobbie)) {
             return false;
@@ -66,12 +66,6 @@ class Validacao{
             return false;   
         }
         return true; 
-    }
-    public static function validarCidade($cidade){
-        if($cidade != null){
-            return true;
-        }
-        return false; 
     }
     
 }

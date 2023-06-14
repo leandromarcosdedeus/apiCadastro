@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Client;
 use App\Validacao\Validacao;
 use Illuminate\Http\Request;
@@ -24,15 +25,29 @@ class ClientController extends Controller
     public function addClient(Request $request){
         
         $teste = new Validacao;
-        //nome, cpf, 
         if($teste->validarClient($request) == true){
-            $client = Client::create($request->all());
+            $city = City::where('nome', $request->cidade_id)->first();
+            if($city == null){
+                return response()->json(['message'=>'Cidade inválida']);
+            }
+            $client = [
+                'nome' => $request->nome,
+                'apelido' => $request->apelido,
+                'time' => $request->time,
+                'CPF' => $request->CPF,
+                'hobbie' => $request->hobbie,
+                'cidade_id'=> $city->id
+            ];
+                $city->increment('quantidade_de_habitantes');
+                $client = Client::create($client);
             return response($client, 201);
         }
         else{
             return response()->json(['message'=>'Cadastro recusado']);
         }
     }
+
+    
     public function updateClient(Request $request, $id){
         $client = Client::find($id);
         if(is_null($client)){
@@ -61,6 +76,17 @@ class ClientController extends Controller
         foreach ($data->groupBy('cidade') as $cidade=>$values) {
                 $result->push([
                     'cidade'=> $cidade,
+                    'values'=> $values->count()
+                ]);
+        }
+        return $result;
+    }
+    public function biggestCrown(){
+        $data = Client::all();
+        $result = collect();
+        foreach ($data->groupBy('time') as $time=>$values) {
+                $result->push([
+                    'time'=> $time,
                     'values'=> $values->count()
                 ]);
         }
